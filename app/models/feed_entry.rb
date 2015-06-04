@@ -12,6 +12,7 @@ class FeedEntry < ActiveRecord::Base
           published_at: entry.published,
           guid: entry.id
         )
+      end
     end
   end
 end
