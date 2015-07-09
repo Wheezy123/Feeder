@@ -1,5 +1,5 @@
 class FeedEntry < ActiveRecord::Base
-  attr_accessible :guid, :url, :title, :summary, :published_at
+  attr_accessor :guid, :url, :title, :summary, :published_at
 
   def self.update_from_feed(feed_name)
     feed = Feed.find_by_name(feed_name)
@@ -28,6 +28,6 @@ class FeedEntry < ActiveRecord::Base
           )
         end
       end
-    end
+
 
 end
