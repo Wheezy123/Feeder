@@ -8,13 +8,36 @@ class FeedEntry < ActiveRecord::Base
     add_entries(feed_data.entries, feed)
   end
 
+  def self.get_from_feed(url)
+    data = Feedjira::Feed.fetch_and_parse(url)
+    data.entries.each do |entry|
+      FeedEntry.create(
+        name: entry.title,
+        url: entry.url,
+        summary: entry.summary
+      )
+    end
+  end
+
 
   def self.get_cnn_stories
     url = 'http://rss.cnn.com/rss/cnn_topstories.rss'
     obj = Feedjira::Feed.fetch_and_parse(url)
-    obj.each do |entry|
+    obj.entries.each do |entry|
       FeedEntry.create(
-        title: entry.title,
+        name: entry.title,
+        url: entry.url,
+        summary: entry.summary
+      )
+    end
+  end
+
+  def self.get_tribune_stories
+    url = 'http://www.chicagotribune.com/news/local/breaking/rss2.0.xml'
+    obj = Feedjira::Feed.fetch_and_parse(url)
+    obj.entries.each do |entry|
+      FeedEntry.create(
+        name: entry.title,
         url: entry.url,
         summary: entry.summary
       )
